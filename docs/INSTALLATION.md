@@ -121,6 +121,163 @@ flutter doctor
 
 ---
 
+## macOS 安装步骤
+
+### 1. 下载 Flutter SDK
+
+1. 访问 Flutter 官网：https://flutter.dev/docs/get-started/install/macos
+2. 下载最新的 Flutter SDK（推荐稳定版）
+3. 解压到合适的位置，例如：`~/develop/flutter`
+   - **注意**：路径中不要包含空格或特殊字符
+
+### 2. 添加到 PATH 环境变量
+
+编辑 `~/.zshrc` 文件（macOS 默认使用 zsh）：
+
+```bash
+export PATH="$PATH:$HOME/develop/flutter/bin"
+```
+
+然后重新加载配置：
+
+```bash
+source ~/.zshrc
+```
+
+### 3. 验证安装
+
+运行以下命令验证：
+
+```bash
+flutter --version
+flutter doctor
+```
+
+### 4. 安装 Xcode（iOS/macOS 开发必需）
+
+1. 从 App Store 安装 Xcode
+2. 打开 Xcode，接受许可协议
+3. 运行以下命令安装 Xcode 命令行工具：
+
+```bash
+sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+sudo xcodebuild -runFirstLaunch
+```
+
+### 5. 安装 CocoaPods（iOS/macOS 开发必需）
+
+CocoaPods 是 iOS 和 macOS 平台的依赖管理工具，Flutter 的 iOS/macOS 插件需要它。
+
+**方法一：使用 Homebrew（推荐）**
+
+```bash
+brew install cocoapods
+```
+
+**方法二：使用 RubyGems**
+
+```bash
+sudo gem install cocoapods
+```
+
+如果遇到权限问题，可以安装到用户目录：
+
+```bash
+gem install cocoapods --user-install
+```
+
+然后添加到 PATH：
+
+```bash
+export PATH="$HOME/.gem/ruby/$(ruby -e 'puts RUBY_VERSION[/\d+\.\d+/]')/bin:$PATH"
+```
+
+验证安装：
+
+```bash
+pod --version
+```
+
+### 6. 安装 Android Studio（Android 开发必需，可选）
+
+如果需要 Android 开发，请安装 Android Studio：
+
+1. 下载并安装 Android Studio：https://developer.android.com/studio
+2. 打开 Android Studio，完成初始设置
+3. 安装 Android SDK：
+   - Tools → SDK Manager
+   - 在 SDK Tools 标签页中，确保勾选：
+     - Android SDK Command-line Tools (latest)
+     - Android SDK Build-Tools
+     - Android SDK Platform-Tools
+   - 选择 Android SDK Platform（选择需要的 API 级别，如 Android SDK Platform 36）
+   - 点击 Apply 安装
+
+### 7. 更新 Android SDK（如果 flutter doctor 提示需要）
+
+如果 `flutter doctor` 显示需要更新 Android SDK，可以使用命令行工具：
+
+```bash
+# 使用 sdkmanager 安装所需的 SDK 和 BuildTools
+~/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-36" "build-tools;28.0.3"
+```
+
+### 8. 接受 Android 许可协议（如果安装了 Android SDK）
+
+```bash
+flutter doctor --android-licenses
+```
+
+按 `y` 接受所有许可协议。
+
+## macOS 常见问题
+
+### 问题 1：CocoaPods 未安装
+
+如果 `flutter doctor` 显示 CocoaPods 未安装：
+
+**解决方案**：
+
+```bash
+# 使用 Homebrew 安装（推荐）
+brew install cocoapods
+
+# 或使用 gem 安装
+sudo gem install cocoapods
+```
+
+### 问题 2：Android SDK 版本不匹配
+
+如果 `flutter doctor` 显示需要特定版本的 Android SDK：
+
+**解决方案**：
+
+```bash
+# 使用 sdkmanager 安装所需的 SDK 版本
+~/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-36" "build-tools;28.0.3"
+```
+
+### 问题 3：Xcode 命令行工具未安装
+
+**解决方案**：
+
+```bash
+sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+sudo xcodebuild -runFirstLaunch
+```
+
+### 问题 4：网络问题（下载依赖慢）
+
+**解决方案**：
+- 配置国内镜像（推荐）：
+  ```bash
+  export PUB_HOSTED_URL="https://pub.flutter-io.cn"
+  export FLUTTER_STORAGE_BASE_URL="https://storage.flutter-io.cn"
+  ```
+- 将上述命令添加到 `~/.zshrc` 使其永久生效
+
+---
+
 ## Linux 安装步骤
 
 ### 1. 下载 Flutter SDK
